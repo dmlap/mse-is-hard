@@ -7,10 +7,12 @@
     <title>reveal.js</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/theme/white.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link href="//vjs.zencdn.net/5.10/video-js.css" rel="stylesheet">
 
     <!-- Printing and PDF exports -->
     <script>
@@ -27,9 +29,191 @@
         <section>
           <h1>In a Perfect World:</h1>
           <h3>Why Media Source Extensions are Hard</h3>
+          <p><small>David LaPalomento, Brightcove</small></p>
         </section>
-        <section>Slide 1</section>
-        <section>Slide 2</section>
+        <section>
+          <style>
+            #player-diagram {
+              max-height: 400px;
+            }
+          </style>
+
+          <h2>What is Media Source Extensions?</h2>
+          <img id="player-diagram" src="img/buffering.png" alt="diagram of a video player">
+          <p>Buffering is now part of user-space</p>
+        </section>
+        <section>
+          <h2>MSE is the Future</h2>
+          <ul>
+            <li>Progressive download is wasteful</li>
+            <li>Progressive download is a worse end-user experience</li>
+            <li>Progressive download is an innovation dead-end</li>
+            <aside class="notes" data-markdown>
+              <script type="text/markdown">
+                - Offline video
+                - Web sockets / RTC
+                - Manual bitrate selection
+              </script>
+            </aside>
+          </ul>
+        </section>
+
+        <!-- MSE is very particular about inputs -->
+        <section>
+          <h2>MSE is persnickety</h2>
+        </section>
+        <section>
+          <style>
+            .reveal .media-file-visualization {
+              border: none;
+              box-shadow: none;
+              display: block;
+              margin: 0 auto;
+            }
+            .reveal .media-file-visualization.fade-out.visible {
+              display: none;
+            }
+          </style>
+
+          <h2>Continuity</h2>
+          <img class="media-file-visualization fragment fade-out" data-fragment-index=0 src="img/segment-tetris-0.png" alt="a simplistic view of a media file">
+          <img class="media-file-visualization fragment current-visible" data-fragment-index=0 src="img/segment-tetris-1.png" alt="a media file with split video and audio">
+          <img class="media-file-visualization fragment current-visible" src="img/segment-tetris-2.png" alt="a media file with split video and audio and mismatched durations">
+        </section>
+        <section id="bridging-the-gaps">
+          <style>
+            #bridging-the-gaps img {
+              border: none;
+              box-shadow: none;
+              display: block;
+              position: absolute;
+              top: 70px;
+            }
+            #bridging-the-gaps .left {
+              right: 100%;
+            }
+            #bridging-the-gaps .right {
+              right: 20px;
+            }
+            #bridging-the-gaps .extra-audio {
+              top: 180px;
+            }
+
+            #bridging-the-gaps.present .left {
+              transition: right 2s ease-out;
+              right: 211px;
+            }
+            #bridging-the-gaps .right:before {
+              content: '?';
+            }
+
+            #bridging-title, #gap-solutions {
+              position: relative;
+            }
+          </style>
+
+          <img class="extra-video left" src="img/extra-video-left.png">
+          <img class="extra-video right" src="img/extra-video-right.png">
+          <img class="extra-audio left" src="img/extra-audio-left.png">
+          <img class="extra-audio right" src="img/extra-audio-right.png">
+
+          <h2 id="bridging-title">Bridging the Gaps</h2>
+          <ul id="gap-solutions">
+            <li>Gap skipper</li>
+            <li>Insert blank frames</li>
+          </ul>
+        </section>
+
+        <!-- MSE provides little information about errors -->
+        <section>
+          <h2>MSE is taciturn</h2>
+          <aside class="notes" data-markdown>
+            <script type="text/markdown">
+              reserved or uncommunicative
+            </script>
+          </aside>
+        </section>
+        <section>
+          <code>MEDIA_ERR_DECODE</code>
+        </section>
+        <section>
+          <style>
+            #media-internals-example {
+              font-size: 12px;
+            }
+          </style>
+
+          <video id="media-internals-example"
+                 width=960
+                 height=400
+                 controls
+                 class="video-js vjs-default-skin">
+            <source
+               src="//d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8"
+               type="application/x-mpegURL">
+          </video>
+          <p><a href="chrome://media-internals">chrome://media-internals</a>
+        </section>
+        <section>
+          <p><a href="http://thumb.co.il" target="_blank">thumb.co.il</a>
+        </section>
+
+        <!-- MSE cannot recover from errors -->
+        <section>
+          <h2>MSE is draconian</h2>
+        </section>
+        <section>
+          <style>
+            .current-visible.visible {
+              display: none;
+            }
+            .current-visible.visible.current-fragment {
+              display: block;
+            }
+          </style>
+
+          <h2>The Two Types of Errors</h2>
+          <div class="fragment current-visible">
+            <h3>Dev errors</h3>
+            <p>Fail fast.</p>
+            <img src="img/destroy-the-machine.gif" alt="a washing machine breaking itself">
+          </div>
+          <div class="fragment current-visible">
+            <h3>Runtime errors</h3>
+            <p>Don't hurt innocent bystanders!</p>
+            <img src="img/end-users.jpg" alt="typical end-users">
+          </div>
+        </section>
+        <section>
+          <h2>All errors are fatal</h2>
+          <ul>
+            <li>Reconstruct the video element, media source, and source buffers</li>
+            <li>Probe and validate media data before appending</li>
+            <li>Re-transcode all your content</li>
+          </ul>
+        </section>
+
+        <!-- MSE improvement suggestions and wrap-up -->
+        <section>
+          <h2>Rabble rousin'</h2>
+          <h3>How can MSE be improved?</h3>
+          <ul>
+            <li>Play through content gaps</li>
+            <li>Create runtime inspection APIs</li>
+            <li>Error recovery</li>
+          </ul>
+        </section>
+        <section>
+          <h1>Thanks!</h1>
+          <p>
+            <small>David LaPalomento (<a href="//twitter.com/dlapalomento">@dlapalomento</a>)</small>
+          </p>
+          <small>
+            <small>Help use these brand new APIs to play back a really old format:
+              <a href="//videojs.github.io/videojs-contrib-hls">github.com/videojs-contrib-hls</a>
+            </small>
+          </small>
+        </section>
       </div>
     </div>
 
@@ -49,6 +233,11 @@
           { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
         ]
       });
+    </script>
+    <script src="//vjs.zencdn.net/5.10/video.js"></script>
+    <script src="//npmcdn.com/videojs-contrib-hls@^3.0.0/dist/videojs-contrib-hls.js"></script>
+    <script>
+      videojs('media-internals-example');
     </script>
   </body>
 </html>
