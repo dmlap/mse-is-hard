@@ -43,6 +43,9 @@
           <p>Buffering is now part of user-space</p>
         </section>
         <section>
+          <img width="700" heigth="700" src="img/mse.svg" alt="MSE pipeline diagram">
+        </section>
+        <section>
           <h2>MSE is the Future</h2>
           <ul>
             <li>Progressive download is wasteful</li>
@@ -73,11 +76,17 @@
             .reveal .media-file-visualization.fade-out.visible {
               display: none;
             }
+            .reveal .split-streams {
+              display: none;
+            }
+            .split-streams.current-fragment {
+              display: block;
+            }
           </style>
 
           <h2>Continuity</h2>
           <img class="media-file-visualization fragment fade-out" data-fragment-index=0 src="img/segment-tetris-0.png" alt="a simplistic view of a media file">
-          <img class="media-file-visualization fragment current-visible" data-fragment-index=0 src="img/segment-tetris-1.png" alt="a media file with split video and audio">
+          <img class="split-streams media-file-visualization fragment current-visible" data-fragment-index=0 src="img/segment-tetris-1.png" alt="a media file with split video and audio">
           <img class="media-file-visualization fragment current-visible" src="img/segment-tetris-2.png" alt="a media file with split video and audio and mismatched durations">
         </section>
         <section id="bridging-the-gaps">
@@ -126,7 +135,7 @@
 
         <!-- MSE provides little information about errors -->
         <section>
-          <h2>MSE is opaque</h2>
+          <h2>MSE is tight-lipped</h2>
           <aside class="notes" data-markdown>
             <script type="text/markdown">
               reserved or uncommunicative
@@ -160,8 +169,13 @@
 
         <!-- MSE cannot recover from errors -->
         <section>
-          <h2>MSE is draconian</h2>
+          <h2>MSE is easily flustered</h2>
         </section>
+        <section>
+          <h2>A trip down memory lane</h2>
+          <img src="img/ysod.png" alt="a yellow screen of death from xhtml">
+        </section>
+        <!--
         <section>
           <style>
             .current-visible.visible {
@@ -184,6 +198,7 @@
             <img src="img/end-users.jpg" alt="typical end-users">
           </div>
         </section>
+        -->
         <section>
           <h2>All errors are fatal</h2>
           <ul>
@@ -196,20 +211,18 @@
         <!-- MSE improvement suggestions and wrap-up -->
         <section>
           <h2>How can MSE be improved?</h2>
+          <p><a href="https://github.com/w3c/media-source/">github.com/w3c/media-source</a></p>
           <ul>
-            <li>Play through content gaps (<a href="https://github.com/w3c/media-source/issues/160">Issue #160</a>)</li>
-            <li>Create runtime inspection APIs (kind of <a href="https://github.com/w3c/media-source/issues/35">Issue #35</a>)</li>
-            <li>Error recovery (<a href="https://github.com/w3c/media-source/issues/36">Issue #36</a>)</li>
+            <li>Play through content gaps (<a href="https://github.com/w3c/media-source/issues/160">issue #160</a>)</li>
+            <li>Create runtime inspection APIs (kind of <a href="https://github.com/w3c/media-source/issues/35">issue #35</a>)</li>
+            <li>Error recovery (<a href="https://github.com/w3c/media-source/issues/36">issue #36</a>)</li>
           </ul>
         </section>
         <section>
           <h1>Thanks!</h1>
-          <p>
-            <small>David LaPalomento (<a href="//twitter.com/dlapalomento">@dlapalomento</a>)</small>
-          </p>
           <small>
             <small>Help use these brand new APIs to play back a really old format:
-              <a href="//videojs.github.io/videojs-contrib-hls">github.com/videojs-contrib-hls</a>
+              <a href="//videojs.github.io/videojs-contrib-hls">github.com/videojs/videojs-contrib-hls</a>
             </small>
           </small>
         </section>
